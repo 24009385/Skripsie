@@ -1,0 +1,322 @@
+* Inductex layer definition file for MIT-LL SFQ5ee processes - CALIBRATED
+*
+* Resistance
+*
+* This version compiled from information open to the public
+*
+* CJF 16 September 2022: SuperTools
+******************************************************************************
+* Calibrated against MITLL test set -- use only with "-th" setting     
+******************************************************************************
+
+$Parameters
+  Units             =  1e-6  
+  SegmentSize       =  1.0  // The max segment size (SegmentSize) was fixed for calibration. DO NOT ADJUST.
+  AbsMin            =  0.025
+  //   For negative mask ground planes, we can get away with GPOverhang = 0 only when ground planes are NOT CROPPED,
+  //     or there is a mandatory skyplane over all structures.  {CF}
+  //   Here, the ground plane (M4) is mask positive, so GPOverhang is irrelevant. Set it 0 just in case...  {CF}
+  GPOverhang        =  0.0
+  ProcessHasGroundPlane = TRUE
+  BlankAllCutsGP    =  TRUE
+  CropGP            =  FALSE
+  GPLayer           =  40
+  TermLayer         =  19
+  TextLayer         =  18
+  BlankAllLayer     =  255
+  Lambda            =  0.09
+  HFilaments        =  1
+  TerminalInRange   =  1.0
+  UnitL             =  1
+  EpsilonR          =  4.6
+  DecimationDistance = 0.02
+  ExtractBoundLayer = 200
+$End
+* L0  -  lowest layer (HKIL - No lambda data available - value is found to match inductance measurements)
+$Layer
+  Number      =     3
+  Name        =     L0
+  Bias        =     0
+  Thickness   =     0.040
+  Lambda      =     0.505    // empirically derived to get 8 pH/sq Lkin {CF}
+  Order       =     0
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     1
+$End
+* C0  -  isolation
+$Layer
+  Number      =     4
+  Name        =     C0
+  Bias        =     0
+  Thickness   =     0.060
+  Order       =     1
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M0  -  lowest conductor
+$Layer  
+  Number      =     1
+  Name        =     M0
+  Bias        =     0
+  Thickness   =     0.200
+  Lambda      =     0.1 
+  Order       =     2
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     2
+$End
+* I0  -  isolation
+$Layer
+  Number      =     2
+  Name        =     I0
+  Bias        =     0
+  Thickness   =     0.161  
+  Order       =     3
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M1  -  conductor
+$Layer
+  Number      =     10
+  Name        =     M1
+  Bias        =     0     
+  Thickness   =     0.200
+  Lambda      =     0.095 
+  Order       =     4
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     2
+$End
+* I1  -  isolation
+$Layer
+  Number      =     11
+  Name        =     I1
+  Bias        =     0
+  Thickness   =     0.22  
+  Order       =     5
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M2  -  conductor
+$Layer
+  Number      =     20
+  Name        =     M2
+  Bias        =     0
+  Thickness   =     0.200
+  Lambda      =     0.095 
+  Order       =     6
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     2
+$End
+* I2  -  isolation
+$Layer
+  Number      =     21
+  Name        =     I2
+  Bias        =     0
+  Thickness   =     0.22 
+  Order       =     7
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M3  -  conductor
+$Layer
+  Number      =     30
+  Name        =     M3
+  Bias        =     0  
+  Thickness   =     0.200
+  Lambda      =     0.085  
+  Order       =     8
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     2
+$End
+* I3  -  isolation
+$Layer
+  Number      =     31
+  Name        =     I3
+  Bias        =     0
+  Thickness   =     0.24 
+  Order       =     9
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M4  -  lower ground plane
+$Layer
+  Number      =     40
+  Name        =     M4
+  Bias        =     0
+  Thickness   =     0.200
+  Lambda      =     0.10 
+  Order       =     10
+  Mask        =     1
+  Filmtype    =     S
+  HFilaments  =     2
+  IsGP        =     true
+$End
+* I4  -  first isolation
+$Layer
+  Number      =     41
+  Name        =     I4
+  Bias        =     0
+  Thickness   =     0.29 
+  Order       =     11
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M5  -  conductor
+$Layer
+  Number     =     50
+  Name       =     M5
+  Bias       =     0     
+  Thickness  =     0.150
+  Lambda     =     0.09  
+  Order      =     12
+  Mask       =     1
+  Filmtype   =     S
+  //  Line thickness is <2*lambda, so 1 HFilaments is sufficient
+  HFilaments =     1
+$End
+* J5  -  JJ definition
+$Layer
+  Number      =     51
+  Name        =     J5
+  Bias        =     0
+  Thickness   =     0.001
+  Order       =     13
+  Mask        =     0
+  Filmtype    =     A
+  IDensity   =      10e-5
+$End
+* I5L  -  lower part of I5
+$Layer
+  Number      =     59
+  Name        =     I5L
+  Bias        =     0
+  Thickness   =     0.22 
+  Order       =     14
+  Mask        =     -1
+  Filmtype    =     I
+  LayerAdd    =     [54]
+  LayerSub    =     [52 56]
+  PlanarModel =     1
+$End
+* C5J  -  contact to JJ
+$Layer
+  Number      =     55
+  Name        =     C5J
+  Bias        =     0
+  Thickness   =     0.001
+  Order       =     15
+  Mask        =     0
+  Filmtype    =     A
+  PlanarModel =     1
+$End
+* R5  -  shunt/bias resistor
+$Layer
+  Number      =     52
+  Name        =     R5
+  Bias        =     0
+  Thickness   =     0.040
+  // Sigma = 1/(Rsheet*thickness); see: 'C.J. Fourie, IEEE T. Appl. Supercond., vol. 25, 1300209, Feb. 2015.'
+  //          Result is in S/um = 1/(Ohm.um)
+  //          This is only used if 'Filmtype = R'
+  // Sigma = 12.5 S/um when Rsheet = 2.0 Ohm/square, and 4.1667 S/um when Rsheet = 6.0 Ohm/square
+  Sigma       =     12.5
+  //Sigma       =     4.1667 
+  Order       =     16
+  Mask        =     1
+  Filmtype    =     R
+  ViaBypass   =     TRUE
+$End
+* C5R  -  contact to resistor
+$Layer
+  Number      =     56
+  Name        =     C5R
+  Bias        =     0
+  Thickness   =     0.001
+  Order       =     17
+  Mask        =     0 
+  Filmtype    =     A
+$End
+* I5  -  second isolation
+$Layer
+  Number      =     54
+  Name        =     I5
+  Bias        =     0
+  Thickness   =     0.04   
+  Order       =     18
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+  LayerADD    =     [55 56]
+$End
+* M6  -  conductor
+$Layer
+  Number     =     60
+  Name       =     M6
+  Bias       =     0
+  Thickness  =     0.200
+  Lambda     =     0.1  
+  Order      =     20
+  Mask       =     1
+  Filmtype   =     S
+  HFilaments =     2
+  Colour     =     150
+$End
+* I6  -  third isolation
+$Layer
+  Number      =     61
+  Name        =     I6
+  Bias        =     0
+  Thickness   =     0.15 
+  Order       =     21
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M7  -  upper ground plane
+$Layer
+  Number     =     70
+  Name       =     M7
+  Bias       =     0
+  Thickness  =     0.200
+  Lambda     =     0.065
+  Order      =     22
+  Mask       =     1
+  Filmtype   =     S
+  HFilaments =     2
+  Colour     =     254
+  IsGP        =     true
+$End
+* I7  -  via in chip passivation (overglass)
+$Layer
+  Number      =     71
+  Name        =     I7
+  Bias        =     0
+  Thickness   =     0.100 // Thickness not specified for process - irrelevant 
+  Order       =     23
+  Mask        =    -1
+  Filmtype    =     I
+  PlanarModel =     1
+$End
+* M8  -  Pads
+$Layer
+  Number     =     80
+  Name       =     M8
+  Bias       =     0
+  Thickness  =     0.250
+  Sigma      =     10
+  Order      =     24
+  Mask       =     1
+  Filmtype   =     S
+  HFilaments =     1
+$End
+*============================================================

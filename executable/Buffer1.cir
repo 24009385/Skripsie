@@ -1,0 +1,44 @@
+
+* Example Buffer basic
+.subckt	bfr1	A	xin	dcin	xout	dcout	q
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.59p    
+L2      5	2       1.59p
+Ld	DCin 	DCout	6.8p
+Lx	Xin	Xout	6.7p
+Lin	A	2	1.22p
+Lq	2	0	7.93p
+Lout	0	q	31p
+
+
+Kx1	Lx	L1	-0.23
+Kx2	Lx	L2	-0.23
+Kxd	Lx	Ld	0.2322
+Kd1	Ld	L1	-0.16
+Kd2	Ld	L2	-0.16
+Kind	Lin	Ld	5.063E-4	
+Kinx	Lin	Lx	3.145E-5
+Kxout	Lx	Lout	2.02E-3
+Kdout	Ld	Lout	2.69E-5
+Kout	Lq	Lout	0.691
+.ends bfr1
+
+
+*Ip2	0	1	pulse(5u	-5u	2580p	0	0	200p	400p)
+Ip1	0	In1	pulse(5u	-5u	180p	0	0	200p	400p)
+IDC	0	DC1	DC	843u
+IAC	0	AC1	sin(0	658u	5G	0)
+Xbfr1	bfr1	In1	AC1	DC1	0	0	bfr1out
+Rout	bfr1out	0	0
+
+
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.07pF, r0=160, rN=16, icrit=0.1mA)
+.tran 0.25p 4000p 0 0.25p
+
+.print I(Lin|Xbfr1)
+.print DEVI IAC
+.print DEVI Rout
+.print I(Lout|Xbfr1)
+.print I(Lq|Xbfr1)
+.end

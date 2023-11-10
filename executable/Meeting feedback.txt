@@ -1,0 +1,4 @@
+Why we thread one way or another DC vs AC clock might effect the bias. go test it and see if it affects the output.
+Speak about why we cant make an XOR gate with MAJ logic only AND and OR and have to cerate XOR with complex logic.
+AND yes you can nest a sub circuit within a sub circuit, go test it and make buffer 40 deep to see if output is affected.
+Majority gates do work you knob just look at the coupling you coupled your inductors wrong, thank you sir. ....testd it and do they really work?

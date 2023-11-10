@@ -1,0 +1,174 @@
+{
+    "MATERIALS": {
+        "T0_l0COND": {
+            "LAMBDA": 5.05E-7,
+            "SIGMA": 0
+        },
+        "T0_c0_ISO": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_m0COND": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_i0_ISO": {
+            "LAMBDA": 9.5E-8,
+            "SIGMA": 0
+        },
+        "T0_m1COND": {
+            "LAMBDA": 9.5E-8,
+            "SIGMA": 0
+        },
+        "T0_i1_ISO": {
+            "LAMBDA": 9.5E-8,
+            "SIGMA": 0
+        },
+        "T0_m2COND": {
+            "LAMBDA": 9.5E-8,
+            "SIGMA": 0
+        },
+        "T0_i2_ISO": {
+            "LAMBDA": 8.5E-8,
+            "SIGMA": 0
+        },
+        "T0_m3COND": {
+            "LAMBDA": 8.5E-8,
+            "SIGMA": 0
+        },
+        "T0_i3_ISO": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_m4COND": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_i4_ISO": {
+            "LAMBDA": 9E-8,
+            "SIGMA": 0
+        },
+        "T0_m5COND": {
+            "LAMBDA": 9E-8,
+            "SIGMA": 0
+        },
+        "T0_i5_ISO": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_m6COND": {
+            "LAMBDA": 1E-7,
+            "SIGMA": 0
+        },
+        "T0_i6_ISO": {
+            "LAMBDA": 6.5E-8,
+            "SIGMA": 0
+        },
+        "T0_m7COND": {
+            "LAMBDA": 6.5E-8,
+            "SIGMA": 0
+        },
+        "T0_i7_ISO": {
+            "LAMBDA": 0,
+            "SIGMA": 1E7
+        },
+        "T0_m8COND": {
+            "LAMBDA": 0,
+            "SIGMA": 1E7
+        }
+    },
+    "MESHES": {
+        "IXMesh0": {
+            "FILE": "dro.msh",
+            "FORMAT": "GMSH",
+            "ENTITIES": {
+                "T0_m4": {
+                    "MATERIAL": "T0_m4COND",
+                    "SHEET_THICKNESS": [2E-7]
+                },
+                "T0_i4": {
+                    "MATERIAL": "T0_i4_ISO",
+                    "SHEET_THICKNESS": [1.5E-7]
+                },
+                "T0_m5": {
+                    "MATERIAL": "T0_m5COND",
+                    "SHEET_THICKNESS": [1.5E-7]
+                },
+                "T0_i5": {
+                    "MATERIAL": "T0_i5_ISO",
+                    "SHEET_THICKNESS": [2E-7]
+                },
+                "T0_m6": {
+                    "MATERIAL": "T0_m6COND",
+                    "SHEET_THICKNESS": [2E-7]
+                },
+                "j2+": { "TERMINAL": true },
+                "j2-": { "TERMINAL": true },
+                "j3+": { "TERMINAL": true },
+                "j3-": { "TERMINAL": true },
+                "pin+": { "TERMINAL": true },
+                "pin-": { "TERMINAL": true },
+                "pout+": { "TERMINAL": true },
+                "pout-": { "TERMINAL": true },
+                "pbias+": { "TERMINAL": true },
+                "pbias-": { "TERMINAL": true },
+                "pclk+": { "TERMINAL": true },
+                "pclk-": { "TERMINAL": true }
+            }
+        }
+    },
+    "COMPONENTS": {
+        "j2": {
+            "NODES": ["IXMesh0::j2+", "IXMesh0::j2-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        },
+        "j3": {
+            "NODES": ["IXMesh0::j3+", "IXMesh0::j3-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        },
+        "pin": {
+            "NODES": ["IXMesh0::pin+", "IXMesh0::pin-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        },
+        "pout": {
+            "NODES": ["IXMesh0::pout+", "IXMesh0::pout-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        },
+        "pbias": {
+            "NODES": ["IXMesh0::pbias+", "IXMesh0::pbias-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        },
+        "pclk": {
+            "NODES": ["IXMesh0::pclk+", "IXMesh0::pclk-"],
+            "TYPE": "VOLTAGE",
+            "VALUE": 1
+        }
+    },
+    "OUTPUT": {
+        "PRINT": {
+            "CURRENT": {
+                "COMPONENTS": ["j2", "j3", "pin", "pout", "pbias", "pclk"],
+                "FILE": "i.txt"
+            }
+        }
+    },
+    "SETTINGS": {
+        "PATHS": { "LICENSE": "C:/InductEx/licenses/ix_license.txt" },
+        "SOLVER": {
+            "MAXITER": 400,
+            "TOL": 1.000E-4,
+            "ABSTOL": 1.000E-4,
+            "THREADS": "MAX"
+        },
+        "MODE": {
+            "TYPE": "MQS",
+            "ANALYSIS": "AC"
+        },
+        "FREQUENCY": 1E10
+    }
+}

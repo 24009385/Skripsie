@@ -1,0 +1,224 @@
+*KLha
+
+.subckt	bias 	DCin	DCout	Xin	Xout
+Lb0	DCin 	DCout	0
+Lb1	Xin	Xout	0
+.ends bias
+
+.subckt OR2	DCin	DCout	InA	InB	q	Xin	Xout
+Xbfr1  	bfr1	InA	DCin	d1out	q1	Xin	a1out
+Xconst	const1	d1out 	d2out	q2	a1out	a2out
+Xbfr3  	bfr1	InB	d2out	DCout	q3	a2out	Xout
+La	q1	qp	16.07p
+Lb	q2	qp	30.38p
+Lc	q3	qp	16.07p
+Lo	qp	q	0.66p
+.ends OR2
+
+.subckt	bfr1	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	-0.573
+.ends bfr1
+
+.subckt	bfrN	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	0.573
+.ends bfrN
+
+.subckt	const0	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.877p    
+L2      5	2       2.402p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.14702 
+Kx2	Lx	L2	-0.196 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.098079 
+Kd2	Ld	L2	-0.15714
+Kxout	Lx	Lout	-5.620E-4
+Kdout	Ld	Lout	-1.441E-3
+Kout	Lq	Lout	-0.57885  
+.ends const0
+
+.subckt	const1	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	2.393p    
+L2      5	2       1.885p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.1958
+Kx2	Lx	L2	-0.1473 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.1562
+Kd2	Ld	L2	-0.0992
+Kxout	Lx	Lout	-5.755E-4
+Kdout	Ld	Lout	-1.419E-3
+Kout	Lq	Lout	-0.57885  
+.ends const1
+
+.subckt AND2	DCin	DCout	InA	InB	q	Xin	Xout
+
+Xbfr1  	bfr1	InA	DCin	d1out	q1	Xin	a1out
+Xconst	const0	d1out 	d2out	q2	a1out	a2out
+Xbfr3  	bfr1	InB	d2out	DCout	q3	a2out	Xout
+
+La	q1	qp	16.07p
+Lb	q2	qp	30.38p
+Lc	q3	qp	16.07p
+Lo	qp	q	0.66p
+.ends AND2
+
+.subckt	splitWB	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.59p    
+L2      5	2       1.59p
+Ld	8 	9	6.8p
+Lx	10	11	6.7p
+Lin	A	2	1.22p
+Lq	2	0	7.93p
+Lout	q	0	31p
+Lb1	9	DCout 	0
+Lb0	DCin 	8	0
+Lb3	11	Xout 	0p
+Lb2	Xin 	10	0p
+Kx1	Lx	L1	-0.186
+Kx2	Lx	L2	-0.186
+Kxd	Lx	Ld	0.190
+Kd1	Ld	L1	-0.133
+Kd2	Ld	L2	-0.133
+Kind	Lin	Ld	5.063E-4	
+Kinx	Lin	Lx	3.145E-5
+Kxout	Lx	Lout	2.02E-3
+Kdout	Ld	Lout	2.69E-5
+Kout	Lq	Lout	0.691
+.ends splitWB
+
+.subckt branch	a	b	q
+Lq	1	q	0.17p
+Lb	b	1	10.4p
+La	a	1	10.4p
+.ends branch
+
+.subckt split	A	DCin	DCout	q0	q1	Xin	Xout
+Xsplit 	splitWB	A	DCin	DCout	out	Xin	Xout
+Xq	branch	q0 	q1	out
+.ends split
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VAC2	0	AC2	SIN(0 811mV 5GHz 150ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+VinA	InA	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps -5mV 550ps -5mV		551ps 5mV 750ps 5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps -5mv 1350ps -5mV 	1351ps 5mV 1550ps 5mV 		1151ps 5mV 1750ps 5mV	1751ps -5mV)
+*Above (00001111)
+
+VinB	InB	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps 5mV 550ps 5mV		551ps -5mV 750ps -5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps 5mv 1350ps 5mV 		1351ps -5mV 1550ps -5mV 	1151ps 5mV 1750ps 5mV		1751ps -5mV)
+*Above (00110011)
+
+
+RinA	InA	A	1000 nfree
+RinB	InB  	B	1000 nfree
+
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+Rx2	AC2	a2in	1000 nfree
+
+XsA	split	A	d1in	dout1	qa0	qa1	a1in	a1out1
+XsB	split	B	dout1	dout2	qb0	qb1	a1out1	a1out2
+
+XA1	bfr1	qa0	dout6	dout5	qa2a	a2in	a2out1
+XA2	bfr1	qa1	dout5	dout4	qa3a	a2out1	a2out2
+XB1	bfr1	qb0	dout4	dout3	qb2a	a2out2	a2out3
+XB2	bfr1	qb1	dout3	dout2	qb3a	a2out3	a2out4
+
+Lm1	qa2a	qa2b	Lmin	
+Lm2	qa3a	qa3b	Lmin	
+Lm3	qb2a	qb2b	Lmin	
+Lm4	qb3a	qb3b	Lmin	
+
+Xor1	OR2	dout6	dout7	qa2b	qb2b	o1a	a1out3	a1out2
+Xand1	AND2	dout7	dout8	qa3b	qb3b	o2a	a1out4 a1out3
+
+Ln1	o1a	o1b	Lmout	
+Ln2	o2a	o2b	Lmout	
+
+
+X1	bfr1	o1b	dout9	dout8	o11	a2out5	a2out4
+X2	bfr1	o2b	dout10	dout9	o21	a2out6	a2out5
+
+X3	bfr1	o11	dout10	dout11	o12	a1out4	a1out5
+Xs1	split	o21	dout11	dout12	o22a	o22b	a1out5	a1out6
+
+X4	bfr1	o12	dout13	dout12	o13a	a2out6	a2out7
+X5	bfr1	o22a	dout14	dout13	o23aa	a2out7	a2out8
+Xnot	bfrN	o22b	dout15	dout14	o23ba	a2out8	a2out9
+
+Lj1	o13a	o13b	Lmin
+Lj2	o23aa	o23ab	Lmin
+Lj3	o23ba	o23bb	Lmin
+
+
+Xand2	AND2	dout15	dout16	o13b	o23bb	out1a	a1out7	a1out6
+X6	bfr1	o23ab	dout16	dout17	out2a	0	a1out7
+
+Lk1	out1a	out1b	Lmout
+Lk2	out2a	out2b	Lmout
+
+Xsum	bfr1	out1b	dout18	dout17	0	a2out10	a2out9
+Xcout	bfr1	out2b	0	dout18	0	0	a2out10
+
+
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+.param Lmin = 160p
+.param Lmout = 2680p
+.tran 0.2p 3000p 0 0.2p
+
+.print i(RinA)
+.print i(RinB)
+.print i(Lq|Xcout)
+.print i(lq|Xsum)
+
+.end

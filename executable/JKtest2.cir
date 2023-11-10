@@ -1,0 +1,65 @@
+*JKtest2
+
+
+.subckt	bfr1	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	-0.573
+.ends bfr1
+
+.subckt	const0	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.877p    
+L2      5	2       2.402p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.14702 
+Kx2	Lx	L2	-0.196 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.098079 
+Kd2	Ld	L2	-0.15714
+Kxout	Lx	Lout	-5.620E-4
+Kdout	Ld	Lout	-1.441E-3
+Kout	Lq	Lout	-0.57885  
+.ends const0
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+
+Xcon	const0	d1in	0	q1	a1in	0
+
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+.tran 0.2p 3000p 0 0.2p
+
+.print v(B11|Xcon)
+.print v(B21|Xcon)
+.print i(B11|Xcon)
+.print i(B21|Xcon)
+
+.end
+
+.end

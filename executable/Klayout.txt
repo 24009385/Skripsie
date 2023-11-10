@@ -1,0 +1,23 @@
+Apparently, I do not use shunt resistance, AQFP is not shunted.
+
+FIle > Import > other files into the current.
+To import other cells as ...something f.cell ?
+
+Use partial to move the metal edge to contact the junction.
+
+Cant amke a voltage source in Klayout so we instead of ground to current source we make a VCC pin in Klayout.
+
+Resistors bleed current in a pattern that decreases the resistive width or increase absynth can do thi calculation for you.
+
+
+Flux trapping don't use solid ground plane, draw a flux trapping moat. There are also rules to creating the moats in the document. 
+Edit select 1, 2, 3, 4, 5 edit cut or something to remove the moats for flux trapping.
+
+
+this is in the inductex netlist
+Need to check everything is correct using inductex. 
+
+As a rule every grounded junction becomes a port? ...this is in the inductex netlist
+Place terminal path along entire width of the input, output, clock input and random places maybe grounds too?
+
+For junction on Klayout do not need to dra or add a terminal just drop the text in the hole the inductex will find it.

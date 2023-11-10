@@ -1,0 +1,18 @@
+digraph netlistgraph {
+edge [color=red];
+  nphi2 -> j2n [label="J2",arrowhead=normal];
+  nphi3 -> j3n [label="J3",arrowhead=normal];
+  in -> 0 [label="PIN",arrowhead=normal];
+  out -> 0 [label="POUT",arrowhead=normal];
+  bias -> 0 [label="PBIAS",arrowhead=normal];
+  clk -> 0 [label="PCLK",arrowhead=normal];
+edge [color=blue];
+  in -> nphi2 [label="L1",arrowhead=normal];
+  nphi2 -> nphi3 [label="L2",arrowhead=normal];
+  nphi3 -> out [label="L3",arrowhead=normal];
+  clk -> nphi3 [label="L4",arrowhead=normal];
+  bias -> nphi2 [label="LBIAS",arrowhead=normal];
+  j2n -> 0 [label="LPJ2",arrowhead=normal];
+  j3n -> 0 [label="LPJ3",arrowhead=normal];
+edge [color=green];
+}

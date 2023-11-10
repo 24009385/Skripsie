@@ -1,0 +1,2 @@
+Absynth v0.01.07 (14 Feb 2020). Copyright 2017-2020 Coenrad Fourie
+(1) Cannot read file \demo\jj_50_b1.abs

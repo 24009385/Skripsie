@@ -1,0 +1,21 @@
+* Title
+* DRO extraction demo
+* Author: CJ Fourie
+***************************
+
+L1     in     nphi2  0.83p
+L2     nphi2  nphi3  8.3p
+L3     nphi3  out    2.06p
+L4     clk    nphi3  0.83p
+
+Lbias  bias   nphi2  1p
+Lpj2   j2n    0      0.1p
+Lpj3   j3n    0      0.1p
+
+J2     nphi2  j2n    250u
+J3     nphi3  j3n    250u
+Pin    in     0
+Pout   out    0
+Pbias  bias   0
+Pclk   clk    0
+.end

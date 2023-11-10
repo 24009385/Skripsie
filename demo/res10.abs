@@ -1,0 +1,41 @@
+* Absynth layout file
+* Describes layout of a series of Josephson junctions as example
+* v1
+* CJF 10 Feb 2020: Resistor with 
+******************************************************************************
+*
+$Parameters
+* Global parameters, where necessary
+* Units = REAL // Unit size in metres
+*------------------------------------
+Units             =  1e-6
+ProcessFile       =  "MITLL.PRD"
+GDSOutFile        =  "res10.gds"
+StructName        =  "res10_0"
+Include           =  "devices.abs"
+$End
+***********************************
+  // Variable definitions - used for parameterization
+
+//$VARIABLE
+//  name = res    
+//  value = 6.86
+//$END
+
+  // Resistor
+
+$DEVICE
+  definition  =   ResistorStandard
+  parameters  = {
+  res = 10          // This is the resistance in ohms
+  width = 0.5       // This is the width of the resistor. If not specified, Absynth will use the smallest possible width.
+//  viasize = 1.0   // If viasize is specified, this will be the minimum size of the via (use 0.7 or up for bias resistors that carry more than 500 uA)
+  }
+  xy={
+    0, 0
+  }
+  rotate = 0
+$END
+
+
+$EOF

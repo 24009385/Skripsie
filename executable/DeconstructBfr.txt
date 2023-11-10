@@ -1,0 +1,56 @@
+
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+Vin1	In1	0	PWL(0ps 0mV 1ps -5mV 150ps -5mV 350ps -5mV 351ps 5mV 550ps 5mV 551ps -5mV 750ps -5mV 751ps 5mV 950ps 5mV 951ps -5mV 1150ps -5mV 1350ps -5mV 1351ps 5mV 1550ps 5mV 1750ps 5mV )
+*Above (00 01010011111)
+
+Rin1	In1	1	1000 nfree
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+
+
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.47p    
+L2      5	2       1.47p
+Ld	d1in 	0	6.65p
+Lx	a1in	0	6.639p
+Lin	1	2	1.571p
+Lq	2	0	8.5p
+Lout1	0	pq	31p
+Lout2	pq	0	0p
+Kx1	Lx	L1	-0.186
+Kx2	Lx	L2	-0.186
+Kxd	Lx	Ld	0.190
+Kd1	Ld	L1	-0.133
+Kd2	Ld	L2	-0.133
+Kind	Lin	Ld	5.063E-4	
+Kinx	Lin	Lx	3.145E-5
+Kxout	Lx	Lout	2.02E-3
+Kdout	Ld	Lout	2.69E-5
+Kout	Lq	Lout	-0.691
+
+
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+.tran 0.2p 3000p 0 0.2p
+
+.print devv B1
+.print devi B1
+.print devp B1
+
+.print i(Lin|Xbfr2)
+.print i(Lq|Xbfr2)
+.print i(Lin|Xbfr3)
+.print i(Lq|Xbfr3)
+
+.end
+
+
+
+
+
+
+
+

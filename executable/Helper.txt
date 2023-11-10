@@ -1,0 +1,55 @@
+josim -o ./Name.csv test.cir  
+-- This runs the netlist in test.cir and outputs a csv file called Name
+
+
+josim  -o ./Name.csv ./test.cir -v 1
+-- Runs a verbose analysis and store as mentioned previously 
+-- V1 min info V2 more info V3 most info 
+
+josim -a 1 -o ./Name.csv test.cir 
+-- May run a phase analysis and store as mentioned previously 
+
+-- there is a .include which includes other files into data currently being processed. Not sure how to use this just yet.
+
+Component List:
+B --Josephson Junction only one at present
+C -- Capacitor
+E -- Voltage comtrolled voltage source (VCVS)
+F -- current controlled current source (CCCS)
+G -- Voltage controlled current source (VCCS)
+H -- Current controlled voltage source (CCVS)
+I -- Current source 
+K -- Mutal inductance 
+L -- Inductor 
+P -- Phase source
+R -- Resistor 
+T -- Transmission Line
+V -- Voltage source
+
+Values of components: 
+
+Suffix		Meaning		Engineering Notation Equivalent
+F		Femto		1E-15
+P		Pico		1E-12
+N		Nano		1E-9
+U		Micro		1E-6
+M		Milli		1E-3
+K		Kilo		1E3
+MEG		Mega		1E6
+X		Mega		1E6
+G		Giga		1E9
+T		Tera		1E12
+
+Note that K in JoSIM will be interpreted as kilo meaning a temperature of 4Kelvin 
+If written as 4K will be interpreted as 4000 Kelvin.
+
+When placing a component it is always:
+ComponentName PositiveTerminal NegativeTerminal Value
+
+Mutual Inductance --K
+K	L1	L2	Value
+
+.tran 	Step	Stop
+
+Sinusoidal Wave will be 
+sin(Offset 	A	[f	[Td	[theta]]])

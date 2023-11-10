@@ -1,0 +1,5 @@
+*bias
+.subckt	bias	DCin	DCout	Xin	Xout
+Lb0	DCin 	DCout	0
+Lb1	Xin	Xout	0
+.ends bias

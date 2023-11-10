@@ -1,0 +1,333 @@
+*FAt2
+
+.subckt	bias 	DCin	DCout	Xin	Xout
+Lb0	DCin 	DCout	0
+Lb1	Xin	Xout	0
+.ends bias
+
+.subckt OR2	DCin	DCout	InA	InB	q	Xin	Xout
+
+Xbfr1  	bfr1	InA	DCin	d1out	q1	Xin	a1out
+Xconst	const1	d1out 	d2out	q2	a1out	a2out
+Xbfr3  	bfr1	InB	d2out	DCout	q3	a2out	Xout
+
+La	q1	qp	16.07p
+Lb	q2	qp	20.38p
+Lc	q3	qp	16.07p
+Lo	qp	q	0.66p
+.ends OR2
+
+.subckt	const1	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	2.393p    
+L2      5	2       1.885p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.1958
+Kx2	Lx	L2	-0.1473 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.1562
+Kd2	Ld	L2	-0.0992
+Kxout	Lx	Lout	-5.755E-4
+Kdout	Ld	Lout	-1.419E-3
+Kout	Lq	Lout	-0.57885  
+.ends const1
+
+.subckt	const0	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.877p    
+L2      5	2       2.402p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.14702 
+Kx2	Lx	L2	-0.196 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.098079 
+Kd2	Ld	L2	-0.15714
+Kxout	Lx	Lout	-5.620E-4
+Kdout	Ld	Lout	-1.441E-3
+Kout	Lq	Lout	-0.57885  
+.ends const0
+
+.subckt AND2	DCin	DCout	InA	InB	q	Xin	Xout
+Xbfr1  	bfr1	InA	DCin	d1out	q1	Xin	a1out
+Xconst	const0	d1out 	d2out	q2	a1out	a2out
+Xbfr3  	bfr1	InB	d2out	DCout	q3	a2out	Xout
+La	q1	qp	16.07p
+Lb	q2	qp	20.38p
+Lc	q3	qp	16.07p
+Lo	qp	q	0.66p
+.ends AND2
+
+.subckt	splitWB	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.59p    
+L2      5	2       1.59p
+Ld	8 	9	6.8p
+Lx	10	11	6.7p
+Lin	A	2	1.22p
+Lq	2	0	7.93p
+Lout	q	0	31p
+Lb1	9	DCout 	0
+Lb0	DCin 	8	0
+Lb3	11	Xout 	0p
+Lb2	Xin 	10	0p
+Kx1	Lx	L1	-0.186
+Kx2	Lx	L2	-0.186
+Kxd	Lx	Ld	0.190
+Kd1	Ld	L1	-0.133
+Kd2	Ld	L2	-0.133
+Kind	Lin	Ld	5.063E-4	
+Kinx	Lin	Lx	3.145E-5
+Kxout	Lx	Lout	2.02E-3
+Kdout	Ld	Lout	2.69E-5
+Kout	Lq	Lout	0.573
+.ends splitWB
+
+.subckt branch	a	b	q
+Lq	1	q	0.17p
+Lb	b	1	10.4p
+La	a	1	10.4p
+.ends branch
+
+.subckt split	A	DCin	DCout	q0	q1	Xin	Xout
+Xsplit 	splitWB	A	DCin	DCout	out	Xin	Xout
+Xq	branch	q0 	q1	out
+.ends split
+
+.subckt	bfr1	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	-0.573
+.ends bfr1
+
+.subckt	bfrN	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	0.573
+.ends bfrN
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VAC2	0	AC2	SIN(0 811mV 5GHz 150ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+VinA	InA	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps -5mV 550ps -5mV		551ps -5mV 750ps -5mV 		751ps -5mV 950ps -5mV 							951ps 5mV 1150ps 5mV 	1151ps 5mv 1350ps 5mV 		1351ps 5mV 1550ps 5mV 		1151ps 5mV 1750ps 5mV	1751ps -5mV)
+*Above (00001111)
+
+VinB	InB	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps -5mV 550ps -5mV		551ps 5mV 750ps 5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps -5mv 1350ps -5mV 	1351ps 5mV 1550ps 5mV 		1151ps 5mV 1750ps 5mV		1751ps -5mV)
+*Above (00110011)
+
+VinC	InC	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps 5mV 550ps 5mV		551ps -5mV 750ps -5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps 5mv 1350ps 5mV 		1351ps -5mV 1550ps -5mV 	1151ps 5mV 1750ps 5mV		1751ps -5mV)
+*Above (01010101)
+
+RinA	InA	A	1000 nfree
+RinB	InB  	B	1000 nfree
+RinC	InC	C	1000 nfree
+
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+Rx2	AC2	a2in	1000 nfree
+
+
+*XsplitA	split	In1	DCin	d1out	q01	q11	Xin1	a1out1
+XsA	split	A	d1in	dout1	qa0	qa1	a1in	a1out1
+XsB	split	B	dout1	dout2	qb0	qb1	a1out1	a1out2
+XsC	split	C	dout2	dout3	qc0	qc1	a1out2	a1out3
+
+XA1	bfr1	qa0	dout9	dout8	qa2	a2out5	a2out6
+XA2	bfr1	qa1	dout8	dout7	qa3	a2out4	a2out5
+XB1	bfr1	qb0	dout7	dout6	qb2	a2out3	a2out4
+XB2	bfr1	qb1	dout6	dout5	qb3	a2out2	a2out3
+XC1	bfr1	qc0	dout5	dout4	qc2	a2out1	a2out2
+XC2	bfr1	qc1	dout4	dout3	qc3	a2in	a2out1
+
+XsA1	split	qa2	dout9	dout10	qa4	qa5	a1out4	a1out3
+XsA2	split	qa3	dout10	dout11	qa6	qa7	a1out5	a1out4
+XsB1	split	qb2	dout11	dout12	qb4	qb5	a1out6	a1out5
+XsB2	split	qb3	dout12	dout13	qb6	qb7	a1out7	a1out6
+XsC1	split	qc2	dout13	dout14	qc4	qc5	a1out8	a1out7
+XsC2	bfr1	qc3	dout14	dout15	qc6	a1out9	a1out8
+
+XssA1	bfr1	qa4	dout16	dout15	qao1a	a2out7	a2out6
+XssA2	bfr1	qa5	dout17	dout16	qao2a	a2out8	a2out7
+XssA3	bfr1	qa6	dout18	dout17	qao3a	a2out9	a2out8
+XssA4	bfr1	qa7	dout19	dout18	qao4a	a2out10	a2out9
+XssB1	bfr1	qb4	dout20	dout19	qbo1a	a2out11	a2out10
+XssB2	bfr1	qb5	dout21	dout20	qbo2a	a2out12	a2out11
+XssB3	bfr1	qb6	dout22	dout21	qbo3a	a2out13	a2out12
+XssB4	bfr1	qb7	dout23	dout22	qbo4a	a2out14	a2out13
+XssC1	bfr1	qc4	dout24	dout23	qco1a	a2out15	a2out14
+XssC2	bfr1	qc5	dout25	dout24	qco2a	a2out16	a2out15
+XssC3	bfr1	qc6	dout26	dout25	qco3a	a2out17	a2out16
+
+
+Lm1	qao1a	qao1b	LMin
+Lm2	qao2a	qao2b	LMin
+Lm3	qao3a	qao3b	LMin
+Lm4	qao4a	qao4b	LMin
+Lm5	qbo1a	qbo1b	LMin
+Lm6	qbo2a	qbo2b	LMin
+Lm7	qbo3a	qbo3b	LMin
+Lm8	qbo4a	qbo4b	LMin
+Lm9	qco1a	qco1b	LMin
+lm10	qco2a	qco2b	LMin
+Lm11	qco3a	qco3b	LMin
+
+
+Xor1	OR2	dout32	dout33	qao1b	qbo1b	oi1a	a1out9	a1out10
+Xand1	AND2	dout31	dout32	qao2b	qbo2b	oi2a	a1out10	a1out11
+Xbfr1	bfr1	qco3b	dout30	dout31	oi3a	a1out11	a1out12
+
+Xo31	OR2	dout29	dout30	qao3b	qbo3b	oi4a	a1out12	a1out13
+Xob1	bfr1	qco1b	dout28	dout29	oi5a	a1out13	a1out14
+
+Xa31	AND2	dout27	dout28	qao4b	qbo4b	oi6a	a1out14	a1out15
+Xab1	bfr1	qco2b	dout26	dout27	oi7a	a1out15	a1out16
+
+
+Ln1	oi1a	oi1b	LMout
+Ln2	oi2a	oi2b	LMout
+Ln3	oi3a	oi3b	LMout
+Ln4	oi4a	oi4b	LMout
+Ln5	oi5a	oi5b	LMout
+Ln6	oi6a	oi6b	LMout
+Ln7	oi7a	oi7b	LMout
+
+Xaz1	bfr1	oi1b	dout34	dout33	o1a	a2out17	a2out18		
+Xaz2	bfr1	oi2b	dout35	dout34	o2a	a2out18	a2out19		
+Xaz3	bfr1	oi3b	dout36	dout35	o3a	a2out19 a2out20
+Xaz4	bfr1	oi4b	dout37	dout36	o4a	a2out20	a2out21	
+Xaz5	bfr1	oi5b	dout38	dout37	o5a	a2out21	a2out22
+Xaz6	bfr1	oi6b	dout39	dout38	o6a	a2out22	a2out23
+Xaz7	bfr1	oi7b	dout40	dout39	o7a	a2out23	a2out24
+
+Lp1	o1a	o1b	LMin
+Lp2	o2a	o2b	LMin
+Lp3	o3a	o3b	LMin
+Lp4	o4a	o4b	LMin
+Lp5	o5a	o5b	LMin
+Lp6	o6a	o6b	LMin
+Lp7	o7a	o7b	LMin
+
+Xo32	OR2	dout40	dout41	o4b	o5b	op1a	a1out17	a1out16
+Xa32	AND2	dout41	dout42	o6b	o7b	op2a	a1out18	a1out17
+Xand2	AND2	dout42	dout43	o1b	o3b	op3a	a1out19	a1out18
+Xbfr3	bfr1	o2b	dout43	dout44	op4a	a1out20	a1out19
+
+Lj1	op1a	op1b	LMout
+Lj2	op2a	op2b	LMout
+Lj3	op3a	op3b	LMout
+Lj4	op4a	op4b	LMout
+
+
+Xe1	bfr1	op1b	dout45	dout44	o11a	a2out25	a2out24
+Xe2	bfr1	op2b	dout46	dout45	o21a	a2out26	a2out25
+Xe3	bfr1	op3b	dout47	dout46	o31a	a2out27	a2out26
+Xe4	bfr1	op4b	dout48	dout47	o41a	a2out28	a2out27
+
+Lk1	o11a	o11b	LMin
+Lk2	o21a	o21b	LMin
+Lk3	o31a	o31b	LMin
+Lk4	o41a	o41b	LMin
+
+Xor3	OR2	dout48	dout49	o31b	o41b	o14a	a1out20	a1out21
+Xh1	bfr1	o21b	dout49	dout50	o34a	a1out21	a1out22
+Xh2	bfr1	o11b	dout50	dout51	o24a	a1out22	a1out23
+
+Ll1	o14a	o14b	LMout
+Ll2	o34a	o34b	LMout
+Ll3	o24a	o24b	LMout
+
+Xi1	bfr1	o14b	dout52	dout51	o15	a2out28	a2out29	
+Xi2	bfr1	o24b	dout53	dout52	o25	a2out29	a2out30	
+Xi3	bfr1	o34b	dout54	dout53	o35	a2out30	a2out31	
+
+Xj1	bfrN	o15	dout54	dout55	o16	a1out24	a1out23
+Xj2	bfr1	o25	dout55	dout56	o26	a1out25	a1out24	
+Xj3	bfr1	o35	dout56	dout57	o36	a1out26	a1out25	
+
+Xisplt	split	o16	dout58	dout57	o171	o172	a2out32	a2out31
+Xis1	bfr1	o26	dout59	dout58	o27	a2out33	a2out32
+Xis2	bfr1	o36	dout60	dout59	o37	a2out34	a2out33
+
+Xk1	bfrN	o171	dout60	dout61	o181	a1out26	a1out27	
+Xk2	bfr1	o172	dout61	dout62	o182	a1out27	a1out28	
+Xk3	bfr1	o27	dout62	dout63	o28	a1out28	a1out29	
+Xk4	bfr1	o37	dout63	dout64	o38	a1out29	a1out30	
+
+XL1	bfr1	o181	dout65	dout64	o191	a2out34	a2out35
+XL2	bfr1	o182	dout66	dout65	o192	a2out35	a2out36	
+XL3	bfr1	o28	dout67	dout66	o29	a2out36	a2out37	
+XL4	bfr1	o38	dout68	dout67	o39	a2out37	a2out38	
+
+Xm1	bfr1	o191	dout68	dout69	o110	a1out31	a1out30
+*Xm1 is the Cout
+Xand4	AND2	dout69	dout70	o192	o29	o210	a1out32	a1out31
+Xm2	bfr1	o39	dout70	dout71	o310	a1out33	a1out32
+
+Xn1	bfr1	o110	dout72	dout71	Cout1	a2out39	a2out38
+Xn2	bfr1	o210	dout73	dout72	out1	a2out40	a2out39
+Xn3	bfr1	o310	dout74	dout73	out2	a2out41	a2out40
+
+XCout1	bfr1	Cout1	dout74	dout75	Cout2	a1out33	a1out34
+Xor4	OR2	dout75	dout76	out1	out2	Sout1	a1out34	0
+
+Xcout	bfr1	Cout2	dout77	dout76	Cout	a2out41	a2out42
+Xsum	bfr1	Sout1	0	dout77	Sout	a2out42	0
+
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+.param LMin = 150p
+.param LMout = 550p
+.tran 0.2p 3000p 0 0.2p
+
+.print i(RinA)
+.print i(RinB)
+.print i(RinC)
+
+.print i(Lq|Xcout)
+.print i(lq|Xsum)
+
+.end

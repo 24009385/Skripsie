@@ -1,0 +1,126 @@
+*KlayoutAND
+
+
+.subckt	bfr1	A	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.98p    
+L2      5	2       1.98p
+Ld	DCin 	DCout	7.34p
+Lx	Xin	Xout	7.28p
+Lin	A	2	2.119p
+Lq	2	0	7.511p
+Lout	0	q	26.304p
+
+Kx1	Lx	L1	-0.17233
+Kx2	Lx	L2	-0.17233
+Kxd	Lx	Ld	0.088579
+Kd1	Ld	L1	-0.12779
+Kd2	Ld	L2	-0.12779
+Kind	Lin	Ld	2.638E-4	
+Kinx	Lin	Lx	7.711E-5
+Kxout	Lx	Lout	-3.194E-5
+Kdout	Ld	Lout	-1.522E-5
+Kout	Lq	Lout	-0.573
+.ends bfr1
+
+.subckt	const0	dcin	dcout	q	xin	xout	
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.877p    
+L2      5	2       2.402p
+Ld	DCin 	DCout	7.369p
+Lx	Xin	Xout	7.321p
+Lq	2	0	7.412p
+Lout	0	q	26.35p
+
+Kx1	Lx	L1	-0.14702 
+Kx2	Lx	L2	-0.196 
+Kxd	Lx	Ld	0.092378 
+Kd1	Ld	L1	-0.098079 
+Kd2	Ld	L2	-0.15714
+Kxout	Lx	Lout	-5.620E-4
+Kdout	Ld	Lout	-1.441E-3
+Kout	Lq	Lout	-0.57885  
+.ends const0
+
+.subckt AND2	DCin	DCout	InA	InB	q	Xin	Xout
+
+Xbfr1  	bfr1	InA	DCin	d1out	q1	Xin	a1out
+Xconst	const0	d1out 	d2out	q2	a1out	a2out
+Xbfr3  	bfr1	InB	d2out	DCout	q3	a2out	Xout
+
+La	q1	qp	16.07p
+Lb	q2	qp	30.38p
+Lc	q3	qp	16.07p
+Lo	qp	q	0.66p
+.ends AND2
+
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VAC2	0	AC2	SIN(0 811mV 5GHz 150ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+VinA	InA	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps -5mV 550ps -5mV		551ps 5mV 750ps 5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps -5mv 1350ps -5mV 	1351ps 5mV 1550ps 5mV 		1151ps 5mV 1750ps 5mV	1751ps -5mV)
+*Above (00001111)
+
+VinB	InB	0	PWL(0ps 0mV 1ps -5mV 	150ps -5mV 350ps -5mV 	351ps 5mV 550ps 5mV		551ps -5mV 750ps -5mV 		751ps 5mV 950ps 5mV 							951ps -5mV 1150ps -5mV 	1151ps 5mv 1350ps 5mV 		1351ps -5mV 1550ps -5mV 	1151ps 5mV 1750ps 5mV		1751ps -5mV)
+*Above (00110011)
+
+
+
+*Output (00 01000001111)
+
+Rin1	InA	A	1000 nfree
+Rin2	InB  	B	1000 nfree
+
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+Rx2	AC2	a2in	1000 nfree	
+
+XA1	bfr1	A	d1in	dout1	aop	a1in	a1out1
+XB1	bfr1	B	dout1	dout2	bop	a1out1	a1out2
+
+Lm1	aop	aoq	190p
+Lm2	bop	boq	190p
+
+XA2	bfr1	aoq	dout3	dout2	ao1p	a2in	a2out1
+XB2	bfr1	boq	dout4	dout3	bo1p	a2out1	a2out2
+
+Lm3	ao1p	ao1q	190p
+Lm4	bo1p	bo1q	190p
+
+XA3	bfr1	ao1q	dout4	dout5	ao2p	a1out3	a1out2
+XB3	bfr1	bo1q	dout5	dout6	bo2p	a1out4	a1out3
+
+Lm5	ao2p	ao2q	190p
+Lm6	bo2p	bo2q	190p
+
+XA4	bfr1	ao2q	dout7	dout6	ao3p	a2out3	a2out2
+XB4	bfr1	bo2q	dout8	dout7	bo3p	a2out4	a2out3
+
+Lm7	ao3p	ao3q	192p
+Lm8	bo3p	bo3q	192p
+
+XAND1	AND2	dout8	dout9	ao3q	bo3q	qa	a1out4	a1out5
+Ltest	qa	qa1	2000p
+
+X1	bfr1	qa1	dout10	dout9	outp	a2out4	0
+
+LoutTest	outp	outq	190p
+
+X2	bfr1	outq	dout10	0	out1	0	a1out5
+
+.model jmod jj(rtype=1, vg=2.6mV, cap=0.07pF, r0=144, rN=16, icrit=0.1mA, Phi=pi)
+.tran 0.2p 3000p 0 0.2p
+
+.print i(Rx1)
+.print i(Rx2)
+.print i(Rin1)
+.print i(Rin2)
+
+.print i(Ltest)
+.print i(Lq|X1)
+.print i(Lq|X2)
+
+.end

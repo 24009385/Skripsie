@@ -1,0 +1,64 @@
+*Const0
+
+.subckt	bfr1	A	dcin	dcout	q	xin	xout	
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.59p    
+L2      5	2       1.59p
+Ld	DCin 	DCout	6.8p
+Lx	Xin	Xout	6.7p
+Lin	A	2	1.22p
+Lq	2	0	7.93p
+Lout	0	q	31p
+
+Kx1	Lx	L1	-0.186
+Kx2	Lx	L2	-0.186
+Kxd	Lx	Ld	0.190
+Kd1	Ld	L1	-0.133
+Kd2	Ld	L2	-0.133
+Kind	Lin	Ld	5.063E-4	
+Kinx	Lin	Lx	3.145E-5
+Kxout	Lx	Lout	2.02E-3
+Kdout	Ld	Lout	2.69E-5
+Kout	Lq	Lout	0.691
+.ends bfr1
+
+.subckt	const1	dcin	dcout	q	xin	xout	
+.model jmod jj(rtype=1, vg=2.8mV, cap=0.064pF, r0=100, rN=17, icrit=0.1mA, Phi=pi)
+B11	4	0	jmod	area=0.5
+B21	5	0	jmod	area=0.5
+L1	2       4	1.75p    
+L2      5	2       1.6p
+Ld	DCin 	DCout	6.6p
+Lx	Xin	Xout	6.6p
+Lq	2	0	8.2p
+Lout	q	0	30.5p
+
+Kx1	Lx	L1	-0.26
+Kx2	Lx	L2	-0.20
+Kxd	Lx	Ld	0.290
+Kd1	Ld	L1	-0.208
+Kd2	Ld	L2	-0.168
+Kxout	Lx	Lout	-2.42E-4
+Kdout	Ld	Lout	-5.49E-4
+Kout	Lq	Lout	0.6
+.ends const1
+
+VAC1	AC1	0	SIN(0 811mV 5GHz 100ps 0)
+VAC2	0	AC2	SIN(0 811mV 5GHz 150ps 0)
+VDC	DC1	0	PWL(0ps 0mv 20ps 1131mV)
+
+Rdc	DC1	d1in	1000 nfree
+Rx1	AC1	a1in	1000 nfree
+Rx2	AC2	a2in	1000 nfree
+
+Xcon	const1	d1in	dout	q1	a1in	0
+*Lout	q1	0	0
+Xbfr1	bfr1	q1	0	dout	0	a2in	0
+
+
+.tran 0.2p 3000p 0 0.2p
+*.print i(Lout)
+.print i(Lq|Xbfr1)
+.end
